@@ -7,7 +7,15 @@ static partial class StringEx
 {
 #pragma warning disable 1591
 
-    public static StringComparison DefaultComparison { get; set; }
+    public static StringComparison GlobalDefaultComparison { get; set; } = StringComparison.Ordinal;
+
+    [ThreadStatic]
+    private static StringComparison? _DefaultComparison;
+    public static StringComparison DefaultComparison
+    {
+        get { _DefaultComparison ?? GlobalDefaultComparison; }
+        set { _DefaultComparison = value; }
+    }
 
     #region basic String methods
 
