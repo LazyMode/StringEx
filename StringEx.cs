@@ -1,4 +1,5 @@
-using System;
+ï»¿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ static partial class StringEx
     private static StringComparison? _DefaultComparison;
     public static StringComparison DefaultComparison
     {
-        get { _DefaultComparison ?? GlobalDefaultComparison; }
+        get { return _DefaultComparison ?? GlobalDefaultComparison; }
         set { _DefaultComparison = value; }
     }
 
@@ -58,6 +59,19 @@ static partial class StringEx
 
     #region BeginWith
 
+    public static bool BeginWith(this string s, char c)
+    {
+        if (s.IsNullOrEmpty()) return false;
+        return s[0] == c;
+    }
+    public static bool BeginWithAny(this string s, IEnumerable<char> chars)
+    {
+        if (s.IsNullOrEmpty()) return false;
+        return chars.Contains(s[0]);
+    }
+    public static bool BeginWithAny(this string s, params char[] chars)
+        => s.BeginWithAny(chars.AsEnumerable());
+
     public static bool BeginWith(this string a, string b)
     {
         if (a == null || b == null) return false;
@@ -82,6 +96,19 @@ static partial class StringEx
     #endregion
 
     #region FinishWith
+
+    public static bool FinishWith(this string s, char c)
+    {
+        if (s.IsNullOrEmpty()) return false;
+        return s.Last() == c;
+    }
+    public static bool FinishWithAny(this string s, IEnumerable<char> chars)
+    {
+        if (s.IsNullOrEmpty()) return false;
+        return chars.Contains(s.Last());
+    }
+    public static bool FinishWithAny(this string s, params char[] chars)
+        => s.FinishWithAny(chars.AsEnumerable());
 
     public static bool FinishWith(this string a, string b)
     {
@@ -112,15 +139,15 @@ static partial class StringEx
 
     private static readonly char[][] Quotes = new[]
     {
-            "\"\"",
-            "''",
-            "¡°¡±",
-            "¡®¡¯",
-            "¡º¡»",
-            "¡¸¡¹",
-            "¡¼¡½",
-            "¡¾¡¿",
-        }.Select(s => s.ToCharArray()).ToArray();
+        "\"\"",
+        "''",
+        "â€œâ€",
+        "â€˜â€™",
+        "ã€Žã€",
+        "ã€Œã€",
+        "ã€–ã€—",
+        "ã€ã€‘",
+    }.Select(s => s.ToCharArray()).ToArray();
     public static string Enquote(this string value)
     {
         if (value == null)
