@@ -2,10 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>StringEx.CS</id>
-        <version>0.3</version>
+        <version>0.3.1</version>
         <authors>Licshee</authors>
         <projectUrl>https://github.com/OmniKits/StringEx</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <developmentDependency>true</developmentDependency>
         <description>-</description>
     </metadata>
     <files>
